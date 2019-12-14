@@ -19,7 +19,9 @@ type Weather struct {
 	date      string
 	weather   string
 	high_temp int
+	high_diff string
 	low_temp  int
+	low_diff  string
 	rainyPct  [4]string // 0-6, 6-12, 12-18, 18-24
 }
 
@@ -59,9 +61,16 @@ func (w *Weather) parse(node *goquery.Selection) {
 
 	temp := weather.Next()
 	highTemp := temp.Children()
+	highDiffStr, _ := highTemp.Html()
+	head = strings.Index(highDiffStr, "[")
+	w.high_diff = highDiffStr[head:]
 	highTempStr, _ := highTemp.Children().Html()
 	w.high_temp, _ = strconv.Atoi(highTempStr)
+
 	lowTemp := highTemp.Next()
+	lowDiffStr, _ := lowTemp.Html()
+	head = strings.Index(lowDiffStr, "[")
+	w.low_diff = lowDiffStr[head:]
 	lowTempStr, _ := lowTemp.Children().Html()
 	w.low_temp, _ = strconv.Atoi(lowTempStr)
 
@@ -98,8 +107,8 @@ func (r Reporter) report() {
 
 func (w Weather) report() {
 	fmt.Printf("|  10qi: %s\n", w.weather)
-	fmt.Printf("|  max : %d.C\n", w.high_temp)
-	fmt.Printf("|  min : %d.C\n", w.low_temp)
+	fmt.Printf("|  max : %d.C %s\n", w.high_temp, w.high_diff)
+	fmt.Printf("|  min : %d.C %s\n", w.low_temp, w.low_diff)
 	fmt.Printf("|  rain:\n")
 
 	fmt.Printf("|    0-6  : %s\n", w.rainyPct[0])
