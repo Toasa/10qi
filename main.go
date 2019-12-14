@@ -86,20 +86,24 @@ func (r Reporter) getSelection() *goquery.Selection {
 }
 
 func (r Reporter) report() {
-	fmt.Printf("%s\n", r.today.date)
+	fmt.Printf("\n%s\n", r.today.date)
+	fmt.Printf("+----------------------+\n")
 	r.today.report()
+	fmt.Printf("+----------------------+\n")
 	fmt.Printf("\n%s\n", r.tomrw.date)
+	fmt.Printf("+----------------------+\n")
 	r.tomrw.report()
+	fmt.Printf("+----------------------+\n\n")
 }
 
 func (w Weather) report() {
-	fmt.Printf("    %s\n", w.weather)
-	fmt.Printf("    max: %d.C\n", w.high_temp)
-	fmt.Printf("    min: %d.C\n", w.low_temp)
-	fmt.Printf("    rain:\n")
+	fmt.Printf("|    10qi: %s\n", w.weather)
+	fmt.Printf("|    max : %d.C\n", w.high_temp)
+	fmt.Printf("|    min : %d.C\n", w.low_temp)
+	fmt.Printf("|    rain:\n")
 
-	fmt.Printf("         0-6  : %s\n", w.rainyPct[0])
-	fmt.Printf("         6-12 : %s\n", w.rainyPct[1])
-	fmt.Printf("         12-18: %s\n", w.rainyPct[2])
-	fmt.Printf("         18-24: %s\n", w.rainyPct[3])
+	fmt.Printf("|      0-6  : %s\n", w.rainyPct[0])
+	fmt.Printf("|      6-12 : %s\n", w.rainyPct[1])
+	fmt.Printf("|      12-18: %s\n", w.rainyPct[2])
+	fmt.Printf("|      18-24: %s\n", w.rainyPct[3])
 }
