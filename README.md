@@ -3,8 +3,8 @@ wether report app in terminal.
 
 ## Requirement
 
-* Go
-* goquery(Go library)
+* Golang
+* goquery(Golang's library)
 ```
 $ go get github.com/PuerkitoBio/goquery
 ```
