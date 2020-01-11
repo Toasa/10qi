@@ -10,7 +10,8 @@ import (
 )
 
 type Reporter struct {
-	url   string
+	city  string
+	url   string // https://weather.yahoo.co.jp/weather/jp/XX/XXXX.html
 	today Weather
 	tomrw Weather
 }
@@ -25,9 +26,16 @@ type Weather struct {
 	rainyPct  [4]string // 0-6, 6-12, 12-18, 18-24
 }
 
+var urls = map[string]string{
+	"京都":  "https://weather.yahoo.co.jp/weather/jp/26/6110.html",
+	"名古屋": "https://weather.yahoo.co.jp/weather/jp/23/5110.html",
+	"久留米": "https://weather.yahoo.co.jp/weather/jp/40/8240.html",
+}
+
 func main() {
-	url := "https://weather.yahoo.co.jp/weather/jp/26/6110.html"
-	r := Reporter{url: url}
+	city := "名古屋"
+	url := urls[city]
+	r := Reporter{city: city, url: url}
 
 	r.setDate()
 	r.scrape()
@@ -95,7 +103,7 @@ func (r Reporter) getSelection() *goquery.Selection {
 }
 
 func (r Reporter) report() {
-	fmt.Printf("\n%s\n", r.today.date)
+	fmt.Printf("\n%s %s\n", r.city, r.today.date)
 	fmt.Printf("+--------------------+\n")
 	r.today.report()
 	fmt.Printf("+--------------------+\n")
